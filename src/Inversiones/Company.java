@@ -56,8 +56,6 @@ public class Company {
         return this.assets.add(dividendStock);
     }
     
-    // añadir metodo que reciba como parametro un activo y el cliente
-    
     public double getAllMarketValue (){
         double marketValue=0;
         for (Client client : clients.values()){
@@ -69,18 +67,45 @@ public class Company {
     }
         
     public double getAllProfit(){
-        return 0;
+        double profit=0;
+        for (Client client : clients.values()){
+            for (Asset asset : client.getAssets()){
+                profit+=asset.getProfit();
+            }
+        }
+        return profit;
     }
     
-    public HashMap<String, Double> getMarketValueByRange(){
+    public HashMap<String, Double> getMarketValueByRange(){   //No entiendo la parte del rango de edades
         return null;
     }
     
     public Client getMaxProfit(){
-        return null;
+        Client cliente=null;
+        double profit=0;
+        double x=0;
+        for (Client client :clients.values()){
+            for (Asset asset : client.getAssets()){
+                profit+=asset.getProfit();
+                if(profit>x){
+                    x=profit;
+                    cliente=client;
+                }
+            }
+        }
+        return cliente;
     }
     
     public HashMap<Client,Double> getClientWithMarketValue(){
-        return null;
+        HashMap<Client, Double> clientes;
+        clientes = new HashMap<>();
+        double marketValue=0;
+        for (Client client : clients.values()){
+            for (Asset asset : client.getAssets()){
+                marketValue+=asset.getMarketValue();
+                clientes.put(client, marketValue);
+            }
+        }
+        return clientes;
     }
 }
